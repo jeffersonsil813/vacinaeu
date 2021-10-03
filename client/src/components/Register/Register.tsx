@@ -1,7 +1,11 @@
 import Axios from "axios";
 import { useState } from "react";
 import Logo from "../../assets/images/logo.png";
-import "./style.scss";
+import "./register.scss";
+
+import toast, { Toaster } from "react-hot-toast";
+import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 export function Register() {
   const [name, setName] = useState("");
@@ -9,30 +13,47 @@ export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignUp = () => {
+  const history = useHistory();
+
+  async function handleSignUp() {
     if (
       name.trim() !== "" &&
       cnpj.trim() !== "" &&
       email.trim() !== "" &&
       password.trim() !== ""
     ) {
-      Axios.post("http://localhost:3001/register", {
+      await Axios.post("http://localhost:3001/register", {
         name: name,
         cnpj: cnpj,
         email: email,
         password: password,
-      }).then(() => {
-        console.log("Success");
+      }).then((response) => {
+        if (response.data !== null && response.data !== undefined) {
+          toast.success("Cadastro realizado com sucesso!", {
+            duration: 3000,
+          });
+          setName("");
+          setCnpj("");
+          setEmail("");
+          setPassword("");
+          history.push("/");
+        }
+      });
+    } else {
+      toast.error("Por favor, preencha todos os campos!", {
+        duration: 3000,
       });
     }
-  };
+  }
 
   return (
     <>
-      <div className="background">
+      <div className="register-container">
         <div className="main">
-          <img src={Logo} alt="VacinaEu" />
-          <form onClick={handleSignUp}>
+          <Link className="logo-link" to="/">
+            <img src={Logo} alt="VacinaEu" />
+          </Link>
+          <div className="input-area">
             <input
               type="text"
               value={name}
@@ -60,12 +81,14 @@ export function Register() {
               placeholder="Entre com uma senha"
             />
 
-            <button type="submit" className="signInButton">
+            <button onClick={handleSignUp} className="signInButton">
               Cadastrar
             </button>
-          </form>
+          </div>
         </div>
       </div>
+
+      <Toaster />
     </>
   );
 }

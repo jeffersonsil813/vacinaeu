@@ -1,4 +1,4 @@
-.background {
+.login-container {
   background-color: #835afd;
   height: 100vh;
   display: flex;
@@ -21,9 +21,9 @@
       align-items: stretch;
       margin: 0 auto;
 
-      > img {
-        width: 100%;
-        // align-self: center;
+      .logo-link img {
+        max-width: 320px;
+        // margin-bottom: 40px;
       }
 
       .signupButton {
@@ -70,7 +70,7 @@
         }
       }
 
-      form {
+      .input-area {
         display: flex;
         flex-direction: column;
         align-items: center;

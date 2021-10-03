@@ -1,14 +1,16 @@
 import Logo from "../../assets/images/logo.png";
-import "./style.scss";
+import "./login.scss";
 
 import React, { useState } from "react";
 import { Button } from "../Button/Button";
 import Axios from "axios";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
+import toast, { Toaster } from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export function Login() {
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
 
   const history = useHistory();
 
@@ -16,24 +18,42 @@ export function Login() {
     history.push("/register");
   }
 
-  function handleSignIn() {
-    // Axios.get("http:localhost:3001/login").then((response) => {
-    //   console.log(response.data);
-    // });
+  async function handleSignIn() {
+    if (email.trim() !== "" && password.trim() !== "") {
+      await Axios.post("http://localhost:3001/login", {
+        email: email,
+        password: password,
+      }).then((response) => {
+        console.log(response.data);
+      });
+    } else {
+      toast.error("Por favor, preencha todos os campos!", {
+        duration: 3000,
+      });
+    }
   }
 
   return (
     <>
-      <div className="background">
+      <div className="login-container">
         <div className="main">
           <div className="main-content">
-            <img src={Logo} alt="VacinaEu" />
+            <Link
+              to="/"
+              onClick={() => {
+                setEmail("");
+                setPassword("");
+              }}
+              className="logo-link"
+            >
+              <img src={Logo} alt="VacinaEu" />
+            </Link>
             <Button onClick={handleSignUp} className="signupButton">
               Cadastre-se
             </Button>
             <div className="separator">Ou faça login</div>
 
-            <form onSubmit={handleSignIn}>
+            <div className="input-area">
               <input
                 type="email"
                 value={email}
@@ -42,17 +62,19 @@ export function Login() {
               />
               <input
                 type="password"
-                value={senha}
-                onChange={(e) => setSenha(e.target.value)}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Sua senha"
               />
-              <button type="submit" className="signinButton">
+              <button onClick={handleSignIn} className="signinButton">
                 Entrar
               </button>
-            </form>
+            </div>
           </div>
         </div>
       </div>
+
+      <Toaster />
     </>
   );
 }

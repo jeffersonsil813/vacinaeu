@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql");
 const cors = require("cors");
-const { encrypt, decrypt } = require("./crypto");
+const { encrypt } = require("./crypto");
+const jwt = require("jsonwebtoken");
+const authConfig = require("./config/auth");
 
 const db = mysql.createPool({
   host: "localhost",
@@ -14,6 +16,12 @@ const db = mysql.createPool({
 app.use(cors());
 app.use(express.json());
 
+function generateToken(params = {}) {
+  return jwt.sign(params, authConfig.secret, {
+    expiresIn: 86400,
+  });
+}
+
 app.get("/", (req, res) => {
   db.query("select * from empresas", (err, result) => {
     if (err) console.log(err);
@@ -22,19 +30,44 @@ app.get("/", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-  const name = req.body.name;
-  const cnpj = req.body.cnpj;
-  const email = req.body.email;
-  const password = encrypt(req.body.password).content;
+  let name = req.body.name;
+  let cnpj = req.body.cnpj;
+  let email = req.body.email;
+  let password = encrypt(req.body.password);
 
   db.query(
     "insert into empresas (emp_nome, emp_cnpj, emp_email, emp_senha) values (?,?,?,?)",
     [name, cnpj, email, password],
     (err, result) => {
       if (err) console.log(err);
-      else console.log("Values inserted successfully");
+      else res.send(result);
     }
   );
+});
+
+app.post("/login", (req, res) => {
+  let email = JSON.stringify(req.body.email);
+  let password = JSON.stringify(encrypt(req.body.password));
+
+  let sql =
+    "select * from empresas where emp_email = " +
+    email +
+    " and emp_senha = " +
+    password +
+    "";
+
+  db.query(sql, (err, result) => {
+    if (err) console.log(err);
+    else {
+      let user = {};
+      user.emp_id = result[0].emp_id;
+      user.emp_nome = result[0].emp_nome;
+      user.emp_cnpj = result[0].emp_cnpj;
+      user.emp_email = result[0].emp_email;
+
+      res.send({ user, token: generateToken({ id: user.emp_id }) });
+    }
+  });
 });
 
 app.listen(3001, () => {
