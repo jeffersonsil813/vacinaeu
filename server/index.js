@@ -59,13 +59,20 @@ app.post("/login", (req, res) => {
   db.query(sql, (err, result) => {
     if (err) console.log(err);
     else {
-      let user = {};
-      user.emp_id = result[0].emp_id;
-      user.emp_nome = result[0].emp_nome;
-      user.emp_cnpj = result[0].emp_cnpj;
-      user.emp_email = result[0].emp_email;
+      console.log(result);
+      if (result.length !== 0) {
+        let user = {};
+        user.emp_id = result[0].emp_id;
+        user.emp_nome = result[0].emp_nome;
+        user.emp_cnpj = result[0].emp_cnpj;
+        user.emp_email = result[0].emp_email;
 
-      res.send({ user, token: generateToken({ id: user.emp_id }) });
+        res.send({ user, token: generateToken({ id: user.emp_id }) });
+      } else {
+        // User not found
+        res.status(400).send({ error: "User not found" });
+        console.log("User not found!");
+      }
     }
   });
 });

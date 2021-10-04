@@ -1,0 +1,67 @@
+header {
+  padding: 24px 24px;
+  border-bottom: 1px solid #e2e2e2;
+
+  .content {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > img {
+      max-height: 45px;
+    }
+
+    .company-name {
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #fff;
+      border: 1px solid #835afd;
+      height: 40px;
+      padding-right: 12px;
+
+      .icon-div {
+        background-color: var(--purple-color);
+        padding: 0 12px 0;
+        height: 100%;
+
+        .user-icon {
+          color: var(--light);
+        }
+      }
+
+      span {
+        text-transform: capitalize;
+        font-size: 14px;
+        font-weight: 500;
+        color: #000000;
+      }
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .signOutButton {
+      height: 40px;
+      background-color: #fff;
+      border: 1px solid var(--purple-color);
+      color: var(--purple-color);
+      border-radius: 8px;
+      font-weight: 500;
+      padding: 0 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        filter: brightness(0.9);
+      }
+    }
+  }
+}
