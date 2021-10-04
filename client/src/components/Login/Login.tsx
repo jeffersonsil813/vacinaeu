@@ -23,9 +23,18 @@ export function Login() {
       await Axios.post("http://localhost:3001/login", {
         email: email,
         password: password,
-      }).then((response) => {
-        console.log(response.data);
-      });
+      })
+        .then((response) => {
+          console.log(response.data);
+          history.push("/home");
+        })
+        .catch((error) => {
+          if (error.message === "Request failed with status code 400") {
+            toast.error("Dados inválidos!", {
+              duration: 3000,
+            });
+          }
+        });
     } else {
       toast.error("Por favor, preencha todos os campos!", {
         duration: 3000,
