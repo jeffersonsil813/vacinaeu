@@ -17,7 +17,7 @@
 
 1. Clone o repositório usando o `git clone`
 2. Entre na pasta do projeto
-3. Entre na pasta client que é onde se concentra a parte do front-end da aplicação e execute o comando `npm install` para instalar as dependências
+3. Entre na pasta client que é onde se encontra a parte do front-end da aplicação e execute o comando `npm install` para instalar as dependências
 4. Entre na pasta server que diz respeito ao back-end e faça o mesmo
 5. Então execute o comando `yarn start` na pasta client
 6. E o comando `yarn dev` na pasta server
