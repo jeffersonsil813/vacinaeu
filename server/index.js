@@ -59,7 +59,6 @@ app.post("/login", (req, res) => {
   db.query(sql, (err, result) => {
     if (err) console.log(err);
     else {
-      console.log(result);
       if (result.length !== 0) {
         let user = {};
         user.emp_id = result[0].emp_id;

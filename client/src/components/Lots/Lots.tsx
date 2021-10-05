@@ -8,8 +8,8 @@ export function Lots() {
       <Header name="Saúde e Bem-estar" />
       <div className="container">
         <BackLink route="/home" />
-        <div className="lots">gbfjkg</div>
-        <div className="places">gjgdjhg</div>
+        <div className="lots">Lotes</div>
+        <div className="places">Locais</div>
       </div>
     </>
   );
