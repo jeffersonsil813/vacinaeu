@@ -25,7 +25,6 @@ function generateToken(params = {}) {
 app.get("/", (req, res) => {
   db.query("select * from empresas", (err, result) => {
     if (err) console.log(err);
-    else res.send(result);
   });
 });
 
