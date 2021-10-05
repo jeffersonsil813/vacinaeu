@@ -23,7 +23,7 @@
 6. E o comando `yarn dev` na pasta server
 
 <h3>📝 Como deve funcionar?</h3>
-<p>Ao rodar o front-end e back-end da aplicação, o usuário(empresa) pode se cadastrar ou fazer login, após o login o usuário é redirecionado para a página home, página em que ele acessa o painel de opções. No momento de login, quando o usuário é autenticado é gerado um token a partir do JWT(JSON WEB TOKEN), porém não foi possível utilizá-lo durante a aplicação.</p>
+<p>Ao rodar o front-end e back-end da aplicação, o usuário(empresa) pode se cadastrar ou fazer login, após o login o usuário é redirecionado para a página home, página em que ele acessa o painel de opções. No momento de login, quando o usuário é autenticado é gerado um token a partir do JWT (JSON WEB TOKEN), porém não foi possível utilizá-lo durante a aplicação.</p>
 
 <h6>
     Follow me on social media 
