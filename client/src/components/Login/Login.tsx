@@ -25,7 +25,6 @@ export function Login() {
         password: password,
       })
         .then((response) => {
-          console.log(response.data);
           history.push("/home");
         })
         .catch((error) => {
